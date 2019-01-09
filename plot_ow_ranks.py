@@ -11,7 +11,7 @@ with open("ow_ranks.txt", "r") as rank_fil:
 dates = np.array(dates)
 ranks = np.array(ranks)
 good_values = ranks != 0
-fig = plt.figure(figsize=(10, 6))
+fig = plt.figure(figsize=(8, 6))
 ax = fig.gca()
 ax.plot_date(dates[good_values], ranks[good_values],"-", tz=None,
              xdate=True, ydate=False, drawstyle="steps-post")
@@ -20,5 +20,5 @@ ax.set_xlabel("Date")
 ax.set_ylabel("Rank")
 ax.axhline(2000, c="gold", linewidth=0.5)
 ax.axhline(2500, c="green", linewidth=2)
-ax.set_ylim(2300, 2700)
+ax.set_ylim(2200, 2700)
 fig.savefig("ranks.png")
