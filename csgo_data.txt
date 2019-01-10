@@ -1,0 +1,2 @@
+# Date, K/D, Kills per Round, Rank
+2019-01-10, 0.818, 1, None
