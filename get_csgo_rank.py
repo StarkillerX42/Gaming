@@ -1,3 +1,4 @@
+#!/home/pi/berryconda3/bin/python
 """This function grabs my CS:GO rank and saves it to a file"""
 import requests
 import datetime
