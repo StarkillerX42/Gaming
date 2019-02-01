@@ -1,4 +1,4 @@
-"""This function grabs my overwatch rank and saves it to a file"""
+"""This function grabs my Overwatch rank and saves it to a file"""
 import requests
 import datetime
 import os
