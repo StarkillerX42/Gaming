@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """This function grabs my overwatch rank and saves it to a file"""
 import requests
 import datetime
