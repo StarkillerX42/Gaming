@@ -33,6 +33,6 @@ with open(rank_path, "r") as fil:
 if need_rank:
     with open(rank_path, "a") as fil:
         print("    Writing new SR")
-        fil.write("{}: {}: {}".format(now.date(), rank, xbl_rank))
+        fil.write("{}: {}: {}\n".format(now.date(), rank, xbl_rank))
 else:
     print("    SR already written today")

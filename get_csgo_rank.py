@@ -1,9 +1,12 @@
 #!/home/pi/berryconda3/bin/python
-"""This function grabs my CS:GO rank and saves it to a file"""
+"""This function grabs my CS:GO rank and saves it to a file. It pulls from
+two different websites because CS:GO's API is difficult and doesn't help
+anyone. """
 import requests
 import datetime
 import os
 from bs4 import BeautifulSoup
+
 now = datetime.datetime.now()
 print("Get CS:GO Rank started at {}".format(now))
 # Download CS:GO's API and access stats, but not skill group
@@ -28,7 +31,7 @@ except KeyError:
 
 csgo_stats = requests.get("https://csgo-stats.com/player/76561198199499279")
 soup = BeautifulSoup(csgo_stats.content, "html.parser")
-rank_img = soup.find("div", class_="player-profile-banner")
+rank_img = soup.find("img", class_="img-rank")
 skill_group = rank_img.get("title")
 
 archive_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
