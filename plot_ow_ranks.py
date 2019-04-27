@@ -3,20 +3,19 @@ mpl.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 from astropy.time import Time
-dates = []
-ranks = []
-with open("ow_ranks.txt", "r") as rank_fil:
-    for i, line in enumerate(rank_fil):
-        date, rank = line.split(":")
-        dates.append(Time(date).plot_date)
-        ranks.append(int(rank))
-dates = np.array(dates)
-ranks = np.array(ranks)
-good_values = ranks != 0
+from astropy.io import ascii
+ranks= ascii.read("ow_ranks.txt", delimiter=":",
+                  names=("Time", "PC", "Xbox"))
+good_values = ranks["PC"] != 0
+xgood_values = ranks["Xbox"] != 0
 fig = plt.figure(figsize=(8, 6), dpi=200)
 ax = fig.gca()
-ax.plot_date(dates[good_values], ranks[good_values], "k-", tz=None,
+ax.plot_date(ranks["Time"][good_values], ranks["PC"][good_values], "k-", tz=None,
              xdate=True, ydate=False, drawstyle="steps-post", zorder=100)
+ax.plot_date(ranks["Time"][xgood_values], ranks["Xbox"][xgood_values], "g-",
+             tz=None,
+             xdate=True, ydate=False, drawstyle="steps-post", zorder=99)
+
 ax.set_title("Overwatch Ranks Over Time")
 ax.set_xlabel("Date")
 ax.set_ylabel("Rank")

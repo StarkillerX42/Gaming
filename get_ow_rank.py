@@ -14,6 +14,13 @@ try:
 except Exception:
     rank = 0
 
+data = requests.get("https://ow-api.com/v1/stats/xbl/Starkiller625/profile")
+# print(data.json())
+try:
+    xbl_rank = int(data.json()["rating"])
+except Exception:
+    xbl_rank = 0
+
 rank_path = os.path.join(os.path.dirname(
         os.path.abspath(__file__)), "ow_ranks.txt")
 # print(rank_path)
@@ -26,6 +33,6 @@ with open(rank_path, "r") as fil:
 if need_rank:
     with open(rank_path, "a") as fil:
         print("    Writing new SR")
-        fil.write("{}: {}\n".format(now.date(), rank))
+        fil.write("{}: {}: {}".format(now.date(), rank, xbl_rank))
 else:
     print("    SR already written today")
