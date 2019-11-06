@@ -9,6 +9,8 @@ print("Get OW Rank started at {}".format(now))
 data = requests.get("https://ow-api.com/v1/stats/pc/us/Starkiller42-11691/"
                     "profile")
 # print(data.json())
+try:
+    rank = int(data.json()['rating'])
 except Exception:
     rank = 0
 
