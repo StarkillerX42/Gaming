@@ -1,4 +1,4 @@
-#!/home/pi/berryconda3/bin/python
+#!/usr/bin/env python3
 """This function grabs my CS:GO rank and saves it to a file. It pulls from
 two different websites because CS:GO's API is difficult and doesn't help
 anyone. """
