@@ -3,11 +3,19 @@ mpl.use("Agg")
 import matplotlib.pyplot as plt
 from astropy.time import Time
 from astropy.io import ascii
+import starcoder42 as s
 ranks = ascii.read("ow_ranks.txt", delimiter=":",
                    names=("Time", "PC", "Xbox"))
-print(ranks)
+rranks = ascii.read('ow_rolelock_ranks.txt', names=('Time',
+                        'PCTank', 'PCDamage', 'PCSupport', 'XboxTank',
+                        'XboxDamage', 'XboxSupport'))
+print(rranks)
 good_values = ranks["PC"] != 0
 xgood_values = ranks["Xbox"] != 0
+rgoodt = rranks['PCTank'] != 0
+rgoodd = rranks['PCDamage'] != 0
+rgoods = rranks['PCSupport'] != 0
+print(rranks['PCSupport'])
 fig = plt.figure(figsize=(8, 6), dpi=200)
 ax = fig.gca()
 ax.plot_date(Time(ranks["Time"][good_values]).plot_date,
@@ -17,6 +25,15 @@ ax.plot_date(Time(ranks["Time"][xgood_values]).plot_date,
              ranks["Xbox"][xgood_values], "g-",
              tz=None,
              xdate=True, ydate=False, drawstyle="steps-post", zorder=99)
+ax.plot_date(Time(rranks['Time'][rgoodt]).plot_date,
+                  rranks['PCTank'][rgoodt], '-', c=s.blue, tz=None, xdate=True,
+             ydate=False, drawstyle='steps-post')
+ax.plot_date(Time(rranks['Time'][rgoodd]).plot_date,
+                  rranks['PCDamage'][rgoodd], '-', c=s.red, tz=None, xdate=True,
+             ydate=False, drawstyle='steps-post')
+ax.plot_date(Time(rranks['Time'][rgoods]).plot_date,
+             rranks['PCSupport'][rgoods], '-', c=s.green, tz=None, xdate=True,
+             ydate=False, drawstyle='steps-post')
 
 ax.set_title("Overwatch Ranks Over Time")
 ax.set_xlabel("Date")
@@ -47,3 +64,4 @@ for i, date in enumerate(seasons):
 
 ax.set_ylim(2150, 2800)
 fig.savefig("ow_ranks.png")
+print('complete!')

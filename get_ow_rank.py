@@ -9,20 +9,24 @@ print("Get OW Rank started at {}".format(now))
 data = requests.get("https://ow-api.com/v1/stats/pc/us/Starkiller42-11691/"
                     "profile")
 # print(data.json())
-try:
-    rank = int(data.json()["rating"])
-except Exception:
-    rank = 0
+# try:
+pc = {'tank': 0, 'damage': 0, 'support': 0}
+ranks = data.json()["ratings"]
+for rank in ranks:
+    pc[rank['role']] = rank['level']
 
 data = requests.get("https://ow-api.com/v1/stats/xbl/Starkiller625/profile")
 # print(data.json())
-try:
-    xbl_rank = int(data.json()["rating"])
-except Exception:
-    xbl_rank = 0
+# try:
+xranks = data.json()["ratings"]
+xbox = {'tank': 0, 'damage': 0, 'support': 0}
+ranks = data.json()["ratings"]
+for rank in xranks:
+    xbox[rank['role']] = rank['level']
+
 
 rank_path = os.path.join(os.path.dirname(
-        os.path.abspath(__file__)), "ow_ranks.txt")
+        os.path.abspath(__file__)), "ow_rolelock_ranks.txt")
 # print(rank_path)
 with open(rank_path, "r") as fil:
     lines = fil.readlines()
@@ -33,6 +37,11 @@ with open(rank_path, "r") as fil:
 if need_rank:
     with open(rank_path, "a") as fil:
         print("    Writing new SR")
-        fil.write("{}: {}: {}\n".format(now.date(), rank, xbl_rank))
+        fil.write("{}: {}: {}: {}: {}: {}: {}\n".format(now.date(), pc['tank'],
+                                                        pc['damage'],
+                                                        pc['support'],
+                                                        xbox['tank'],
+                                                        xbox['damage'],
+                                                        xbox['support']))
 else:
     print("    SR already written today")
