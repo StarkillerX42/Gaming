@@ -35,7 +35,7 @@ rank_img = soup.find("img", class_="img-rank")
 skill_group = rank_img.get("title")
 
 archive_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                            "csgo_data.txt")
+                            "csgo_hist.txt")
 
 with open(archive_path, "r") as fil:
     lines = fil.readlines()
